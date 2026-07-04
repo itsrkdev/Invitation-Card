@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
+import bridePic from './assets/S.png';
+import groomPic from './assets/H.png';
 
 // ======================================================================
 // WEDDING_DATA — अपनी डिटेल्स यहाँ बदलें (Premium Muslim Theme)
@@ -11,13 +13,13 @@ const WEDDING_DATA = {
     name: "Shahen",
     role: "Aroos (Dulhan)",
     about: "Chai, kitaabein aur apno se ghiri Shahen, jo har khushi ko dil se jeeti hai.",
-    photo: "./assets/S.png" // यहाँ दुल्हन की फोटो का URL डालें
+    photo: bridePic, // यहाँ दुल्हन की फोटो का URL डालें
   },
   groom: {
     name: "Haider",
     role: "Arees (Dulha)",
     about: "Sapno ka picha karne wale aur parivaar se pyaar karne wale Haider.",
-    photo: "/assets/H.png" // यहाँ दूल्हे की फोटो का URL डालें
+    photo: groomPic, // यहाँ दूल्हे की फोटो का URL डालें
   },
   weddingDateISO: "2026-10-29T19:00:00", // Countdown इसी डेट से चलेगा
   weddingDateDisplay: "THURSDAY, 29 OCTOBER 2026",
