@@ -237,8 +237,8 @@ section {
     font-size: 1.5rem;
     transition: opacity .3s;
     position: absolute;
-    top: 30%;
-    left: 62%;
+    top: 29%;
+    left: 50%;
     transform: translate(-50%);
     background-color: #8b0000; /* Rich Velvet Red */
     width: 42px;               /* 2px badha diya taaki icon ache se fit ho */
@@ -351,17 +351,6 @@ footer .script { font-family: var(--font-script); font-size: 2.5rem; color: var(
   position: relative;
   z-index: 12; /* यह फ्लैप (10) से भी ऊपर रहेगा ताकि टच तुरंत काम करे */
 }
-
-/* --- लिफाफे की सील (Star/✨) --- */
-/* .env-seal {
-  position: absolute;
-  top: 75px; 
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 1.5rem;
-  z-index: 11;
-  transition: opacity 0.3s;
-} */
 
 .env-wrap.open .env-seal {
   opacity: 0;
