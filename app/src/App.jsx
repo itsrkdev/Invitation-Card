@@ -119,7 +119,7 @@ function useCountdown(targetISO) {
   return left;
 }
 
-/* ---------------- Reveal-on-scroll Mock for Slide ---------------- */
+/* ---------------- Reveal Mock ---------------- */
 function Reveal({ children, className = "" }) {
   return <div className={"reveal show " + className}>{children}</div>;
 }
@@ -138,11 +138,10 @@ function EventIcon() {
 export default function App() {
   const [opened, setOpened] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const cd = useCountdown(WEDDING_DATA.weddingDateISO);
   const isThrottled = useRef(false);
 
-  // Layout Configuration
   const sections = [
     { id: "hero", label: "Home" },
     { id: "couple", label: "Couple" },
@@ -164,7 +163,7 @@ export default function App() {
 
   const jumpToSlide = (index) => {
     setCurrentSlide(index);
-    setIsSidebarOpen(false); 
+    setIsMobileMenuOpen(false); 
   };
 
   useEffect(() => {
@@ -172,8 +171,8 @@ export default function App() {
     let touchStartX = 0;
 
     const handleWheel = (e) => {
-      if (Math.abs(e.deltaY) > 15 || Math.abs(e.deltaX) > 15) {
-        if (e.deltaY > 0 || e.deltaX > 0) handleSlideChange('next');
+      if (Math.abs(e.deltaY) > 20) {
+        if (e.deltaY > 0) handleSlideChange('next');
         else handleSlideChange('prev');
       }
     };
@@ -182,7 +181,7 @@ export default function App() {
     const handleTouchEnd = (e) => {
       const touchEndX = e.changedTouches[0].clientX;
       const diffX = touchStartX - touchEndX;
-      if (Math.abs(diffX) > 50) {
+      if (Math.abs(diffX) > 60) {
         if (diffX > 0) handleSlideChange('next');
         else handleSlideChange('prev');
       }
@@ -210,167 +209,181 @@ export default function App() {
     <div className="wedding-body">
       <Envelope onOpen={() => setOpened(true)} />
       
-      {/* SIDEBAR NAVIGATION TRIGGER TOGGLE */}
+      {/* MOBILE ONLY NAVIGATION TRIGGER HEADER */}
       {opened && (
-        <button 
-          className={`menu-toggle-btn ${isSidebarOpen ? 'active' : ''}`} 
-          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-          aria-label="Toggle Menu"
-        >
-          <span className="bar"></span>
-          <span className="bar"></span>
-          <span className="bar"></span>
-        </button>
+        <div className="mobile-header">
+          <div className="mobile-title">{WEDDING_DATA.bride.name} &amp; {WEDDING_DATA.groom.name}</div>
+          <button 
+            className={`menu-toggle-btn ${isMobileMenuOpen ? 'active' : ''}`} 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            <span className="bar"></span>
+            <span className="bar"></span>
+            <span className="bar"></span>
+          </button>
+        </div>
       )}
 
-      {/* PREMIUM SIDEBAR MENU SLIDER */}
-      <div className={`sidebar-menu ${isSidebarOpen ? 'open' : ''}`}>
-        <div className="sidebar-logo">⚜️</div>
-        <nav className="sidebar-nav">
-          {sections.map((s, index) => (
-            <button
-              key={s.id}
-              className={`nav-item-btn ${currentSlide === index ? 'active' : ''}`}
-              onClick={() => jumpToSlide(index)}
-            >
-              {s.label}
-            </button>
-          ))}
-        </nav>
-      </div>
-
-      {/* BACKDROP ACCESSIBILITY UNDERNEATH THE SIDEBAR */}
-      <div 
-        className={`sidebar-overlay ${isSidebarOpen ? 'visible' : ''}`} 
-        onClick={() => setIsSidebarOpen(false)}
-      ></div>
-
-      {/* HORIZONTAL CONTINUOUS PRESENTATION LAYER */}
-      <div 
-        className="main-container" 
-        style={{ transform: `translateX(-${currentSlide * 100}vw)` }}
-      >
-        {/* HERO SECTION */}
-        <section id="hero">
-          <div className="hero-content">
-            <div className="bismillah-text">{WEDDING_DATA.bismillah}</div>
-            <div className="eyebrow">The Celebration of Nikah</div>
-            
-            <h1 className="names">
-              <div className="bride-name">{WEDDING_DATA.bride.name}</div>
-              <div className="amp">&amp;</div>
-              <div className="groom-name">{WEDDING_DATA.groom.name}</div>
-            </h1>
-            
-            <p className="subtitle">{WEDDING_DATA.tagline}</p>
-            
-            <div className="date-pill-container">
-              <div className="date-pill">{WEDDING_DATA.weddingDateDisplay}</div>
-              <div className="hijri-pill">{WEDDING_DATA.hijriDate}</div>
-            </div>
-            
-            <p className="venue-text">📍 {WEDDING_DATA.venueCity}</p>
-
-            <div id="countdown">
-              <div className="cd-box"><div className="num">{cd.d}</div><div className="lbl">Ayyam (Days)</div></div>
-              <div className="cd-box"><div className="num">{cd.h}</div><div className="lbl">Sa'at (Hours)</div></div>
-              <div className="cd-box"><div className="num">{cd.m}</div><div className="lbl">Daqiqe (Mins)</div></div>
-              <div className="cd-box"><div className="num">{cd.s}</div><div className="lbl">Saniye (Secs)</div></div>
+      {/* DUAL WORKSPACE LAYOUT WRAPPER */}
+      <div className="app-workspace">
+        
+        {/* SIDEBAR NAVIGATION - Desktop par static button panel, Mobile par sliding panel */}
+        {opened && (
+          <div className={`sidebar-menu ${isMobileMenuOpen ? 'open' : ''}`}>
+            <div className="sidebar-logo">⚜️</div>
+            <nav className="sidebar-nav">
+              {sections.map((s, index) => (
+                <button
+                  key={s.id}
+                  className={`nav-item-btn ${currentSlide === index ? 'active' : ''}`}
+                  onClick={() => jumpToSlide(index)}
+                >
+                  <span className="btn-indicator"></span>
+                  {s.label}
+                </button>
+              ))}
+            </nav>
+            <div className="sidebar-footer">
+              <p className="script">{WEDDING_DATA.bride.name[0]} &amp; {WEDDING_DATA.groom.name[0]}</p>
             </div>
           </div>
-        </section>
+        )}
 
-        {/* COUPLE SECTION */}
-        <section id="couple">
-          <Reveal className="section-inner center">
-            <div className="eyebrow">The Blessed Couple</div>
-            <h2>Aroos &amp; Arees</h2>
-            <div className="couple-row">
-              <div className="person">
-                <div className="avatar">
-                  {WEDDING_DATA.bride.photo
-                    ? <img src={WEDDING_DATA.bride.photo} alt={WEDDING_DATA.bride.name} />
-                    : WEDDING_DATA.bride.name[0]}
+        {/* MOBILE OVERLAY BACKGROUND */}
+        <div 
+          className={`sidebar-overlay ${isMobileMenuOpen ? 'visible' : ''}`} 
+          onClick={() => setIsMobileMenuOpen(false)}
+        ></div>
+
+        {/* RIGHT CONTENT WORKSPACE - HORIZONTAL SLIDER VIEW */}
+        <div className="content-workspace">
+          <div 
+            className="main-container" 
+            style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+          >
+            {/* HERO SECTION */}
+            <section id="hero">
+              <div className="hero-content">
+                <div className="bismillah-text">{WEDDING_DATA.bismillah}</div>
+                <div className="eyebrow">The Celebration of Nikah</div>
+                
+                <h1 className="names">
+                  <div className="bride-name">{WEDDING_DATA.bride.name}</div>
+                  <div className="amp">&amp;</div>
+                  <div className="groom-name">{WEDDING_DATA.groom.name}</div>
+                </h1>
+                
+                <p className="subtitle">{WEDDING_DATA.tagline}</p>
+                
+                <div className="date-pill-container">
+                  <div className="date-pill">{WEDDING_DATA.weddingDateDisplay}</div>
+                  <div className="hijri-pill">{WEDDING_DATA.hijriDate}</div>
                 </div>
-                <h3>{WEDDING_DATA.bride.name}</h3>
-                <div className="role">{WEDDING_DATA.bride.role}</div>
-                <p>{WEDDING_DATA.bride.about}</p>
+                
+                <p className="venue-text">📍 {WEDDING_DATA.venueCity}</p>
+
+                <div id="countdown">
+                  <div className="cd-box"><div className="num">{cd.d}</div><div className="lbl">Ayyam (Days)</div></div>
+                  <div className="cd-box"><div className="num">{cd.h}</div><div className="lbl">Sa'at (Hours)</div></div>
+                  <div className="cd-box"><div className="num">{cd.m}</div><div className="lbl">Daqiqe (Mins)</div></div>
+                  <div className="cd-box"><div className="num">{cd.s}</div><div className="lbl">Saniye (Secs)</div></div>
+                </div>
               </div>
+            </section>
 
-              <div className="amp-big">&amp;</div>
+            {/* COUPLE SECTION */}
+            <section id="couple">
+              <Reveal className="section-inner center">
+                <div className="eyebrow">The Blessed Couple</div>
+                <h2>Aroos &amp; Arees</h2>
+                <div className="couple-row">
+                  <div className="person">
+                    <div className="avatar">
+                      {WEDDING_DATA.bride.photo
+                        ? <img src={WEDDING_DATA.bride.photo} alt={WEDDING_DATA.bride.name} />
+                        : WEDDING_DATA.bride.name[0]}
+                    </div>
+                    <h3>{WEDDING_DATA.bride.name}</h3>
+                    <div className="role">{WEDDING_DATA.bride.role}</div>
+                    <p>{WEDDING_DATA.bride.about}</p>
+                  </div>
 
-              <div className="person">
-                <div className="avatar">
-                  {WEDDING_DATA.groom.photo
-                    ? <img src={WEDDING_DATA.groom.photo} alt={WEDDING_DATA.groom.name} />
-                    : WEDDING_DATA.groom.name[0]}
+                  <div className="amp-big">&amp;</div>
+
+                  <div className="person">
+                    <div className="avatar">
+                      {WEDDING_DATA.groom.photo
+                        ? <img src={WEDDING_DATA.groom.photo} alt={WEDDING_DATA.groom.name} />
+                        : WEDDING_DATA.groom.name[0]}
+                    </div>
+                    <h3>{WEDDING_DATA.groom.name}</h3>
+                    <div className="role">{WEDDING_DATA.groom.role}</div>
+                    <p>{WEDDING_DATA.groom.about}</p>
+                  </div>
                 </div>
-                <h3>{WEDDING_DATA.groom.name}</h3>
-                <div className="role">{WEDDING_DATA.groom.role}</div>
-                <p>{WEDDING_DATA.groom.about}</p>
-              </div>
-            </div>
-          </Reveal>
-        </section>
+              </Reveal>
+            </section>
 
-        {/* QUOTE SECTION */}
-        <section id="story">
-          <Reveal className="section-inner">
-            <Divider />
-            <blockquote className="islamic-quote">{WEDDING_DATA.storyQuote}</blockquote>
-            <Divider />
-          </Reveal>
-        </section>
+            {/* QUOTE SECTION */}
+            <section id="story">
+              <Reveal className="section-inner">
+                <Divider />
+                <blockquote className="islamic-quote">{WEDDING_DATA.storyQuote}</blockquote>
+                <Divider />
+              </Reveal>
+            </section>
 
-        {/* EVENTS SECTION */}
-        <section id="events">
-          <Reveal className="section-inner center">
-            <div className="eyebrow">Save The Date</div>
-            <h2>Program / Itinerary</h2>
-            <div className="events-grid">
-              {WEDDING_DATA.events.map((ev, i) => (
-                <div className="event-card" key={i}>
-                  <EventIcon />
-                  <h3>{ev.title}</h3>
-                  <div className="when">{ev.when}</div>
-                  <div className="where">📍 {ev.where}</div>
+            {/* EVENTS SECTION */}
+            <section id="events">
+              <Reveal className="section-inner center">
+                <div className="eyebrow">Save The Date</div>
+                <h2>Program / Itinerary</h2>
+                <div className="events-grid">
+                  {WEDDING_DATA.events.map((ev, i) => (
+                    <div className="event-card" key={i}>
+                      <EventIcon />
+                      <h3>{ev.title}</h3>
+                      <div className="when">{ev.when}</div>
+                      <div className="where">📍 {ev.where}</div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </Reveal>
-        </section>
+              </Reveal>
+            </section>
 
-        {/* RSVP SECTION */}
-        <section id="rsvp">
-          <Reveal className="section-inner center">
-            <div className="eyebrow">Join Us In Our Prayers</div>
-            <h2>RSVP / Istigbal</h2>
-            <p className="lead">Aapki shirkat aur duaein hamare naye safar ki barkat hain.</p>
-            <form className="rsvp-form" onSubmit={handleRSVP}>
-              <input required placeholder="Aapka Ism-e-Girami (Full Name)" value={form.name}
-                onChange={e => setForm({ ...form, name: e.target.value })} />
-              <input type="number" min="1" placeholder="Mehmano ki sankhya (No. of Guests)" value={form.guests}
-                onChange={e => setForm({ ...form, guests: e.target.value })} />
-              <select value={form.attending} onChange={e => setForm({ ...form, attending: e.target.value })}>
-                <option style={{ color: '#fff', background: '#1c352d' }}>Ji Haan, zaroor aayenge</option>
-                <option style={{ color: '#fff', background: '#1c352d' }}>Maaf kijiye, nahi aa paenge</option>
-              </select>
-              <textarea placeholder="Dulha-Dulhan ke liye Dua / Sandesh (Optional)" value={form.message}
-                onChange={e => setForm({ ...form, message: e.target.value })}></textarea>
-              <button type="submit">WhatsApp par Ittila karein</button>
-            </form>
-          </Reveal>
-        </section>
+            {/* RSVP SECTION */}
+            <section id="rsvp">
+              <Reveal className="section-inner center">
+                <div className="eyebrow">Join Us In Our Prayers</div>
+                <h2>RSVP / Istigbal</h2>
+                <p className="lead">Aapki shirkat aur duaein hamare naye safar ki barkat hain.</p>
+                <form className="rsvp-form" onSubmit={handleRSVP}>
+                  <input required placeholder="Aapka Ism-e-Girami (Full Name)" value={form.name}
+                    onChange={e => setForm({ ...form, name: e.target.value })} />
+                  <input type="number" min="1" placeholder="Mehmano ki sankhya (No. of Guests)" value={form.guests}
+                    onChange={e => setForm({ ...form, guests: e.target.value })} />
+                  <select value={form.attending} onChange={e => setForm({ ...form, attending: e.target.value })}>
+                    <option style={{ color: '#fff', background: '#1c352d' }}>Ji Haan, zaroor aayenge</option>
+                    <option style={{ color: '#fff', background: '#1c352d' }}>Maaf kijiye, nahi aa paenge</option>
+                  </select>
+                  <textarea placeholder="Dulha-Dulhan ke liye Dua / Sandesh (Optional)" value={form.message}
+                    onChange={e => setForm({ ...form, message: e.target.value })}></textarea>
+                  <button type="submit">WhatsApp par Ittila karein</button>
+                </form>
+              </Reveal>
+            </section>
+          </div>
+        </div>
+
       </div>
 
-      {/* MINI FOOTER CONTAINER FOR ACTIVE PRESENTATION TRACKING */}
+      {/* TRACKING NAV DOTS AT CENTER BOTTOM OF CONTENT */}
       {opened && (
         <div id="navdots">
           {sections.map((s, index) => (
             <button 
               key={s.id} 
               className={currentSlide === index ? "active" : ""} 
-              title={s.label} 
               onClick={() => setCurrentSlide(index)}
             ></button>
           ))}
