@@ -134,8 +134,40 @@ function EventIcon() {
   );
 }
 
+/* ---------------- Real Viewport Height Fix ----------------
+   Mobile browsers (jaise Realme X2 ka Chrome) ka address bar
+   dikhta/chhupta rehta hai, jisse "100vh" browser ke poore virtual
+   viewport ko count karta hai — visible screen se bada. Isse content
+   thoda cut hota hai aur scroll bhi apna sahi area match nahi karta.
+   Yaha hum window.innerHeight se ek CSS variable set karte hain jo
+   hamesha REAL visible height ke barabar rehta hai. */
+function useRealViewportHeight() {
+  useEffect(() => {
+    const setHeight = () => {
+      document.documentElement.style.setProperty('--app-height', `${window.innerHeight}px`);
+    };
+    setHeight();
+    window.addEventListener('resize', setHeight);
+    window.addEventListener('orientationchange', setHeight);
+    // Address bar show/hide par bhi update ho (scroll-triggered resize kuch phones par late aata hai)
+    let raf;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(setHeight);
+    };
+    window.addEventListener('scroll', onScroll);
+    return () => {
+      window.removeEventListener('resize', setHeight);
+      window.removeEventListener('orientationchange', setHeight);
+      window.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+}
+
 /* ---------------- Main App Component ---------------- */
 export default function App() {
+  useRealViewportHeight();
   const [opened, setOpened] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const cd = useCountdown(WEDDING_DATA.weddingDateISO);
