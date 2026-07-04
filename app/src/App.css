@@ -255,14 +255,7 @@ section {
     cursor: pointer; /* Taaki user ko pata chale ki ispe click karna hai */
 }
 
-/* .env-seal {
-  position: absolute;
-  top: 110px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 1.5rem;
-  z-index: 4;
-} */
+
 
 .env-wrap.open .env-seal {
   opacity: 0;
