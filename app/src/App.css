@@ -233,7 +233,7 @@ section {
   font-size: 1.5rem;
   transition: opacity .3s;
   position: absolute;
-  top: 50%; 
+  top: 38%; 
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #8b0000; 
@@ -247,7 +247,6 @@ section {
   justify-content: center;
   cursor: pointer; 
 }
-
 .env-wrap.open .env-seal {
   opacity: 0;
   pointer-events: none;
