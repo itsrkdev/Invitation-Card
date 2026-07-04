@@ -15,6 +15,7 @@
   --font-script: 'Great Vibes', cursive;
   --font-sans: 'Montserrat', sans-serif;
   --sidebar-width: 280px;
+  --app-height: 100vh; /* JS isko real screen height se update karta hai (address-bar fix) */
 }
 
 * {
@@ -32,7 +33,7 @@ body {
 
 .wedding-body {
   width: 100vw;
-  height: 100vh;
+  height: var(--app-height);
   position: relative;
   overflow: hidden;
 }
@@ -41,20 +42,13 @@ body {
 .app-workspace {
   display: flex;
   width: 100vw;
-  height: 100vh;
+  height: var(--app-height);
 }
-.eyebrow{
-   text-align: center;
-}
-.lead{
-   text-align: center;
-}
-
 
 /* --- SIDEBAR PANEL SYSTEM (DESKTOP DEFAULT) --- */
 .sidebar-menu {
   width: var(--sidebar-width);
-  height: 100vh;
+  height: var(--app-height);
   background: linear-gradient(180deg, #0e241c 0%, #050f0b 100%);
   border-right: 1px solid rgba(212, 175, 55, 0.2);
   display: flex;
@@ -143,7 +137,7 @@ body {
 /* --- RIGHT SIDE CONTENT CORE CONTAINER --- */
 .content-workspace {
   flex-grow: 1;
-  height: 100vh;
+  height: var(--app-height);
   position: relative;
   overflow: hidden;
   background-color: var(--bg-color);
@@ -152,14 +146,14 @@ body {
 .main-container {
   display: flex;
   width: 100%;
-  height: 100vh;
+  height: var(--app-height);
   transition: transform 0.85s cubic-bezier(0.77, 0, 0.175, 1);
   will-change: transform;
 }
 
 section {
   min-width: 100%;
-  height: 100vh;
+  height: var(--app-height);
   flex-shrink: 0;
   display: flex;
   flex-direction: column;   
@@ -396,7 +390,7 @@ section {
 
 /* --- INTERNAL PAGES DESIGN --- */
 .section-inner { width: 100%; max-width: 900px; margin: auto 0; }
-h2 { font-family: var(--font-royal); font-size: 2rem; color: var(--gold-primary); margin-bottom: 25px; text-align: center; }
+h2 { font-family: var(--font-royal); font-size: 2rem; color: var(--gold-primary); margin-bottom: 25px; }
 .couple-row { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 25px; }
 .person { width: 260px; background: var(--card-bg); border: 1px solid rgba(212, 175, 55, 0.2); padding: 22px; border-radius: 12px; }
 .avatar { width: 110px; height: 110px; border-radius: 50%; border: 2px solid var(--gold-primary); margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-family: var(--font-royal); font-size: 2.2rem; background: var(--bg-color); color: var(--gold-primary); overflow: hidden; }
@@ -429,7 +423,7 @@ h2 { font-family: var(--font-royal); font-size: 2rem; color: var(--gold-primary)
 /* ======================================================================
    PERFECT RESPONSIVE & MOBILE DESIGN ARCHITECTURE (SIDEBAR FIX + SLIDE FIX)
    ====================================================================== */
-@media (max-width: 980px) {
+@media (max-width: 900px) {
   :root {
     --sidebar-width: 0px; 
   }
@@ -541,7 +535,7 @@ h2 { font-family: var(--font-royal); font-size: 2rem; color: var(--gold-primary)
 
   .content-workspace {
     width: 100vw;
-    height: 100vh;
+    height: var(--app-height);
     overflow: hidden;
     position: relative;
   }
@@ -557,7 +551,7 @@ h2 { font-family: var(--font-royal); font-size: 2rem; color: var(--gold-primary)
   .main-container {
     display: flex !important;
     flex-direction: row !important;
-    height: 100vh !important;
+    height: var(--app-height) !important;
     touch-action: pan-y;
   }
   
@@ -565,7 +559,7 @@ h2 { font-family: var(--font-royal); font-size: 2rem; color: var(--gold-primary)
     width: 100vw !important;     
     min-width: 100vw !important; 
     max-width: 100vw !important;
-    height: 100vh !important;
+    height: var(--app-height) !important;
     flex-shrink: 0 !important;   
     padding: 90px 20px 70px !important; 
     display: flex !important;
