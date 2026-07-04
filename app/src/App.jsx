@@ -11,7 +11,7 @@ const WEDDING_DATA = {
     name: "Shahen",
     role: "Aroos (Dulhan)",
     about: "Chai, kitaabein aur apno se ghiri Shahen, jo har khushi ko dil se jeeti hai.",
-    photo: "/assets/S.png" // यहाँ दुल्हन की फोटो का URL डालें
+    photo: "./assets/S.png" // यहाँ दुल्हन की फोटो का URL डालें
   },
   groom: {
     name: "Haider",
