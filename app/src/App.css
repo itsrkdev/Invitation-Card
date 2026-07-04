@@ -37,6 +37,12 @@ body {
   position: relative;
   overflow: hidden;
 }
+.eyebrow{
+       text-align: center;
+}
+.lead{
+    text-align: center;
+}
 
 /* --- DUAL WORKSPACE LAYOUT (DESKTOP) --- */
 .app-workspace {
