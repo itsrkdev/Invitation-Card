@@ -28,8 +28,8 @@ body {
 
 /* --- SECTIONS LAYOUT --- */
 section {
-  min-height: 100vh;
-  padding: 60px 20px;
+  min-height: 45vh;
+  padding: 20px 20px;
   display: flex;
   flex-direction: column;   
   align-items: center;
