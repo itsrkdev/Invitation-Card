@@ -43,6 +43,13 @@ body {
   width: 100vw;
   height: 100vh;
 }
+.eyebrow{
+   text-align: center;
+}
+.lead{
+   text-align: center;
+}
+
 
 /* --- SIDEBAR PANEL SYSTEM (DESKTOP DEFAULT) --- */
 .sidebar-menu {
