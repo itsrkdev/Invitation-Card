@@ -19,12 +19,11 @@
   padding: 0;
 }
 
-/* --- HORIZONTAL SCROLL INTEGRATION --- */
 body {
   background-color: var(--bg-color);
   color: var(--text-light);
   font-family: var(--font-sans);
-  overflow: hidden; /* Main scrollbar ko block karne ke liye */
+  overflow: hidden; /* Main window scroll system block kiya */
 }
 
 .wedding-body {
@@ -34,18 +33,18 @@ body {
   position: relative;
 }
 
-/* Presentation Slides Container */
+/* Horizontal Presentation Slides Alignment */
 .main-container {
   display: flex;
   width: 100vw;
   height: 100vh;
-  transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1); /* Premium smooth transition */
+  transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
   will-change: transform;
 }
 
-/* --- SECTIONS LAYOUT (SLIDE MODIFIED) --- */
+/* --- SECTIONS HORIZONTAL INTERACTION --- */
 section {
-  min-width: 100vw; /* Har ek section poori screen gherega slide ki tarah */
+  min-width: 100vw; 
   height: 100vh;
   padding: 40px 20px;
   display: flex;
@@ -53,9 +52,9 @@ section {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  border-right: 1px solid rgba(212, 175, 55, 0.1); /* Bottom se hatakar horizontal border lagaya */
+  border-right: 1px solid rgba(212, 175, 55, 0.1); 
   text-align: center;
-  overflow-y: auto; /* Agar choti screen pe content bada ho toh section ke andar scroll ho sake */
+  overflow-y: auto; /* Choti screen par safely andar local scrolling milegi */
 }
 
 .hero-content {
@@ -140,38 +139,6 @@ section {
   line-height: 1.6;
 }
 
-/* --- COUNTDOWN LAYOUT --- */
-#countdown {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 25px;
-  flex-wrap: wrap;
-}
-
-.cd-box {
-  background: var(--card-bg);
-  border: 1px solid rgba(212, 175, 55, 0.25);
-  padding: 15px;
-  border-radius: 8px;
-  min-width: 95px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-}
-
-.cd-box .num {
-  font-family: var(--font-serif);
-  font-size: 1.8rem;
-  color: var(--gold-primary);
-  font-weight: bold;
-}
-
-.cd-box .lbl {
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--text-muted);
-}
-
 /* --- ENVELOPE OVERLAY & LAYER CONTROLS --- */
 #envelope-overlay {
   position: fixed;
@@ -244,13 +211,13 @@ section {
   z-index: 1;
 }
 
-/* PC SEAL POSITION FIXED (PC par button ke upar nahi aayega ab) */
+/* PC WAX SEAL ALIGNMENT FIXED */
 .env-seal {
   z-index: 11;
   font-size: 1.5rem;
   transition: opacity .3s;
   position: absolute;
-  top: 38%; /* 47% se badal kar 38% kiya taaki button daba sakein */
+  top: 38%; 
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #8b0000; 
@@ -282,13 +249,12 @@ section {
   z-index: 12; 
 }
 
-/* --- OTHER COMPONENT SECTIONS --- */
+/* --- SECTIONS INTERIORS --- */
 .section-inner { width: 100%; max-width: 900px; }
 h2 { font-family: var(--font-royal); font-size: 2rem; color: var(--gold-primary); margin-bottom: 30px; }
 .couple-row { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 30px; }
 .person { max-width: 280px; background: var(--card-bg); border: 1px solid rgba(212, 175, 55, 0.2); padding: 25px; border-radius: 12px; }
 .avatar { width: 110px; height: 110px; border-radius: 50%; border: 2px solid var(--gold-primary); margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-family: var(--font-royal); font-size: 2.2rem; background: var(--bg-color); color: var(--gold-primary); overflow: hidden; }
-.avatar img { width: 100%; height: 100%; object-fit: cover; }
 .amp-big { font-family: var(--font-script); font-size: 4rem; color: var(--gold-primary); }
 .divider { display: flex; align-items: center; justify-content: center; margin: 30px auto; max-width: 350px; }
 .divider .line { height: 1px; flex-grow: 1; background: linear-gradient(to right, transparent, var(--gold-primary), transparent); }
@@ -296,54 +262,22 @@ h2 { font-family: var(--font-royal); font-size: 2rem; color: var(--gold-primary)
 .islamic-quote { font-family: var(--font-serif); font-size: 1.2rem; line-height: 1.8; color: var(--gold-glow); max-width: 650px; margin: 0 auto; font-style: italic; }
 .events-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-top: 20px; }
 .event-card { background: var(--card-bg); border: 1px solid rgba(212, 175, 55, 0.2); border-top: 4px solid var(--gold-primary); padding: 25px 15px; border-radius: 8px; }
-.event-card .icon { width: 30px; height: 30px; margin-bottom: 10px; }
-.event-card .when { color: var(--gold-primary); font-weight: 600; margin-bottom: 5px; }
-.gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; }
-.gal-item { background: var(--card-bg); aspect-ratio: 1; border: 1px solid rgba(212, 175, 55, 0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; }
+
+/* --- RSVP SYSTEM --- */
 .rsvp-form { max-width: 450px; margin: 30px auto 0; background: var(--card-bg); border: 1px solid rgba(212, 175, 55, 0.2); padding: 30px 20px; border-radius: 12px; }
-.rsvp-form input, .rsvp-form select, .rsvp-form textarea { width: 100%; padding: 12px; background: var(--bg-color); border: 1px solid rgba(212, 175, 55, 0.25); color: var(--text-light); border-radius: 6px; margin-bottom: 15px; }
+.rsvp-form input, .rsvp-form select { width: 100%; padding: 12px; background: var(--bg-color); border: 1px solid rgba(212, 175, 55, 0.25); color: var(--text-light); border-radius: 6px; margin-bottom: 15px; font-family: var(--font-sans); }
 .rsvp-form button { width: 100%; padding: 12px; background: var(--gold-primary); color: var(--bg-color); border: none; font-family: var(--font-serif); font-weight: bold; border-radius: 6px; cursor: pointer; }
 
-/* --- NAVIGATION DOTS ADJUSTMENTS --- */
+/* --- DOTS SYSTEM NAVIGATION --- */
 #navdots { position: fixed; right: 20px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 12px; z-index: 1000; }
 #navdots button { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.2); border: none; cursor: pointer; transition: background 0.3s, transform 0.3s; }
 #navdots button.active { background: var(--gold-primary); transform: scale(1.4); }
 
-footer { text-align: center; padding: 40px 20px; background: #06110d; border-top: 1px solid rgba(212, 175, 55, 0.15); }
-footer .script { font-family: var(--font-script); font-size: 2.5rem; color: var(--gold-primary); }
-
-/* --- FALLING PETALS ANIMATION --- */
-.petal { position: fixed; top: -10%; pointer-events: none; z-index: 9999; animation: fall linear infinite; }
-@keyframes fall { 0% { top: -10%; transform: translateX(0) rotate(0deg); opacity: 1; } 100% { top: 110%; transform: translateX(80px) rotate(360deg); opacity: 0; } }
-
-/* --- PERFECT RESPONSIVE MEDIA QUERY (MOBILE FIX) --- */
+/* --- RESPONSIVE FIXES --- */
 @media (max-width: 600px) {
-  #hero h1.names { 
-    font-size: 2.2rem; 
-  }
-  
-  .env-wrap { 
-    width: 290px; 
-    height: 220px; 
-  }
-  
-  .env-flap { 
-    border-left-width: 145px; 
-    border-right-width: 145px; 
-    border-top-width: 110px; 
-  }
-
-  /* Mobile screen par seal ko normal position par center kiya */
-  .env-seal {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 36px;        
-    height: 36px;
-    font-size: 1.1rem;   
-  }
-
-  #navdots {
-    right: 10px;
-  }
+  #hero h1.names { font-size: 2.2rem; }
+  .env-wrap { width: 290px; height: 220px; }
+  .env-flap { border-left-width: 145px; border-right-width: 145px; border-top-width: 110px; }
+  .env-seal { top: 50%; left: 50%; transform: translate(-50%, -50%); width: 36px; height: 36px; font-size: 1.1rem; }
+  #navdots { right: 10px; }
 }
