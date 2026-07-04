@@ -389,7 +389,7 @@ section {
 
 /* --- INTERNAL PAGES DESIGN --- */
 .section-inner { width: 100%; max-width: 900px; margin: auto 0; }
-h2 { font-family: var(--font-royal); font-size: 2rem; color: var(--gold-primary); margin-bottom: 25px; }
+h2 { font-family: var(--font-royal); font-size: 2rem; color: var(--gold-primary); margin-bottom: 25px; text-align: center; }
 .couple-row { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 25px; }
 .person { width: 260px; background: var(--card-bg); border: 1px solid rgba(212, 175, 55, 0.2); padding: 22px; border-radius: 12px; }
 .avatar { width: 110px; height: 110px; border-radius: 50%; border: 2px solid var(--gold-primary); margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-family: var(--font-royal); font-size: 2.2rem; background: var(--bg-color); color: var(--gold-primary); overflow: hidden; }
