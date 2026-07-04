@@ -19,23 +19,43 @@
   padding: 0;
 }
 
+/* --- HORIZONTAL SCROLL INTEGRATION --- */
 body {
   background-color: var(--bg-color);
   color: var(--text-light);
   font-family: var(--font-sans);
-  overflow-x: hidden;
+  overflow: hidden; /* Main scrollbar ko block karne ke liye */
 }
 
-/* --- SECTIONS LAYOUT --- */
+.wedding-body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Presentation Slides Container */
+.main-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1); /* Premium smooth transition */
+  will-change: transform;
+}
+
+/* --- SECTIONS LAYOUT (SLIDE MODIFIED) --- */
 section {
-  min-height: 45vh;
-  padding: 20px 20px;
+  min-width: 100vw; /* Har ek section poori screen gherega slide ki tarah */
+  height: 100vh;
+  padding: 40px 20px;
   display: flex;
   flex-direction: column;   
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+  flex-shrink: 0;
+  border-right: 1px solid rgba(212, 175, 55, 0.1); /* Bottom se hatakar horizontal border lagaya */
   text-align: center;
+  overflow-y: auto; /* Agar choti screen pe content bada ho toh section ke andar scroll ho sake */
 }
 
 .hero-content {
@@ -185,7 +205,6 @@ section {
   z-index: 1;
 }
 
-/* 1. Shuruat mein card peeche rahega */
 .env-card {
   position: absolute;
   width: 90%;
@@ -201,13 +220,11 @@ section {
   transition: transform 0.8s ease, z-index 0.4s ease;
 }
 
-/* Envelope khulne par card upar aa jayega */
 .env-wrap.open .env-card {
   transform: translateY(-80px);
   z-index: 15; 
 }
 
-/* 2. Lifafe ka upper tikona flap */
 .env-flap {
   position: absolute;
   top: 0; left: 0; right: 0;
@@ -227,13 +244,13 @@ section {
   z-index: 1;
 }
 
-/* 3. Wax Seal (Maroon & Gold Look) */
+/* PC SEAL POSITION FIXED (PC par button ke upar nahi aayega ab) */
 .env-seal {
   z-index: 11;
   font-size: 1.5rem;
   transition: opacity .3s;
   position: absolute;
-  top: 47%; 
+  top: 38%; /* 47% se badal kar 38% kiya taaki button daba sakein */
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #8b0000; 
@@ -247,12 +264,12 @@ section {
   justify-content: center;
   cursor: pointer; 
 }
+
 .env-wrap.open .env-seal {
   opacity: 0;
   pointer-events: none;
 }
 
-/* 4. Open Button Layering */
 .open-btn {
   background: var(--bg-color);
   color: var(--gold-primary);
@@ -286,9 +303,12 @@ h2 { font-family: var(--font-royal); font-size: 2rem; color: var(--gold-primary)
 .rsvp-form { max-width: 450px; margin: 30px auto 0; background: var(--card-bg); border: 1px solid rgba(212, 175, 55, 0.2); padding: 30px 20px; border-radius: 12px; }
 .rsvp-form input, .rsvp-form select, .rsvp-form textarea { width: 100%; padding: 12px; background: var(--bg-color); border: 1px solid rgba(212, 175, 55, 0.25); color: var(--text-light); border-radius: 6px; margin-bottom: 15px; }
 .rsvp-form button { width: 100%; padding: 12px; background: var(--gold-primary); color: var(--bg-color); border: none; font-family: var(--font-serif); font-weight: bold; border-radius: 6px; cursor: pointer; }
+
+/* --- NAVIGATION DOTS ADJUSTMENTS --- */
 #navdots { position: fixed; right: 20px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 12px; z-index: 1000; }
-#navdots button { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.2); border: none; cursor: pointer; }
-#navdots button.active { background: var(--gold-primary); transform: scale(1.3); }
+#navdots button { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.2); border: none; cursor: pointer; transition: background 0.3s, transform 0.3s; }
+#navdots button.active { background: var(--gold-primary); transform: scale(1.4); }
+
 footer { text-align: center; padding: 40px 20px; background: #06110d; border-top: 1px solid rgba(212, 175, 55, 0.15); }
 footer .script { font-family: var(--font-script); font-size: 2.5rem; color: var(--gold-primary); }
 
@@ -313,6 +333,7 @@ footer .script { font-family: var(--font-script); font-size: 2.5rem; color: var(
     border-top-width: 110px; 
   }
 
+  /* Mobile screen par seal ko normal position par center kiya */
   .env-seal {
     top: 50%;
     left: 50%;
@@ -320,5 +341,9 @@ footer .script { font-family: var(--font-script); font-size: 2.5rem; color: var(
     width: 36px;        
     height: 36px;
     font-size: 1.1rem;   
+  }
+
+  #navdots {
+    right: 10px;
   }
 }
