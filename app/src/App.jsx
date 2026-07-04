@@ -138,7 +138,6 @@ function EventIcon() {
 export default function App() {
   const [opened, setOpened] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const cd = useCountdown(WEDDING_DATA.weddingDateISO);
   const isThrottled = useRef(false);
   const currentSlideRef = useRef(currentSlide);
@@ -171,7 +170,6 @@ export default function App() {
 
   const jumpToSlide = (index) => {
     setCurrentSlide(index);
-    setIsMobileMenuOpen(false);
   };
 
   // ---- SCROLL WHEEL + TOUCH SWIPE -> SLIDE CHANGE (works on PC + phone) ----
@@ -231,27 +229,19 @@ export default function App() {
     <div className="wedding-body">
       <Envelope onOpen={() => setOpened(true)} />
 
-      {/* MOBILE ONLY NAVIGATION TRIGGER HEADER */}
+      {/* MOBILE ONLY TOP TITLE BAR (no hamburger — nav ab neeche bottom bar me hai) */}
       {opened && (
         <div className="mobile-header">
           <div className="mobile-title">{WEDDING_DATA.bride.name} &amp; {WEDDING_DATA.groom.name}</div>
-          <button
-            className={`menu-toggle-btn ${isMobileMenuOpen ? 'active' : ''}`}
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            <span className="bar"></span>
-            <span className="bar"></span>
-            <span className="bar"></span>
-          </button>
         </div>
       )}
 
       {/* DUAL WORKSPACE LAYOUT WRAPPER */}
       <div className="app-workspace">
 
-        {/* SIDEBAR NAVIGATION - Desktop par static button panel, Mobile par sliding panel */}
+        {/* SIDEBAR NAVIGATION - Desktop par left panel, Mobile par bottom bar. Hamesha visible, click par slide badal jata hai */}
         {opened && (
-          <div className={`sidebar-menu ${isMobileMenuOpen ? 'open' : ''}`}>
+          <div className="sidebar-menu">
             <div className="sidebar-logo">⚜️</div>
             <nav className="sidebar-nav">
               {sections.map((s, index) => (
@@ -269,14 +259,6 @@ export default function App() {
               <p className="script">{WEDDING_DATA.bride.name[0]} &amp; {WEDDING_DATA.groom.name[0]}</p>
             </div>
           </div>
-        )}
-
-        {/* MOBILE OVERLAY BACKGROUND */}
-        {opened && (
-          <div
-            className={`sidebar-overlay ${isMobileMenuOpen ? 'visible' : ''}`}
-            onClick={() => setIsMobileMenuOpen(false)}
-          ></div>
         )}
 
         {/* RIGHT CONTENT WORKSPACE - HORIZONTAL SLIDER VIEW */}
