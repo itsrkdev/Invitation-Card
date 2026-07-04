@@ -415,14 +415,14 @@ h2 { font-family: var(--font-royal); font-size: 2rem; color: var(--gold-primary)
 
 
 /* ======================================================================
-   PERFECT RESPONSIVE & MOBILE DESIGN ARCHITECTURE (PHONE MODE RULES)
+   PERFECT RESPONSIVE & MOBILE DESIGN ARCHITECTURE (PHONE MODE FIXED)
    ====================================================================== */
 @media (max-width: 900px) {
   :root {
-    --sidebar-width: 0px; /* Reset space for mobile full screen width */
+    --sidebar-width: 0px; 
   }
 
-  /* Compact Top Header Bar Activate */
+  /* Compact Top Header Bar */
   .mobile-header {
     display: flex;
     position: fixed;
@@ -468,11 +468,11 @@ h2 { font-family: var(--font-royal); font-size: 2rem; color: var(--gold-primary)
   .menu-toggle-btn.active .bar:nth-child(2) { opacity: 0; }
   .menu-toggle-btn.active .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-  /* Left-side drawer menu panel transformation for mobile */
+  /* Left-side drawer menu panel */
   .sidebar-menu {
     position: fixed;
     top: 0;
-    left: -280px; /* Chupa hua */
+    left: -280px; 
     width: 280px;
     height: 100vh;
     z-index: 1500;
@@ -483,7 +483,7 @@ h2 { font-family: var(--font-royal); font-size: 2rem; color: var(--gold-primary)
   }
   
   .sidebar-menu.open {
-    left: 0; /* Sliding in smoothly */
+    left: 0; 
   }
 
   .sidebar-nav {
@@ -496,26 +496,82 @@ h2 { font-family: var(--font-royal); font-size: 2rem; color: var(--gold-primary)
   }
   
   section {
-    padding: 90px 15px 60px; /* Space top for sticky header view */
+    padding: 85px 20px 60px; /* Top padding badha di taki header ke peeche content na chupe */
   }
 
   /* Content area adjustment */
   #navdots {
     left: 50%;
-    bottom: 20px;
+    bottom: 15px;
   }
 
-  /* Element resize variables for mobile screens */
-  #hero h1.names { font-size: 2.2rem; }
-  .bismillah-text { font-size: 2.1rem; }
-  .islamic-quote { font-size: 1.05rem; line-height: 1.6; }
-  .couple-row { gap: 15px; }
-  .person { width: 100%; max-width: 290px; padding: 15px; }
-  .avatar { width: 95px; height: 95px; }
-  .amp-big { font-size: 2.8rem; margin: -5px 0; }
-  .events-grid { grid-template-columns: 1fr; width: 100%; max-width: 320px; }
+  /* --- FIXES BASED ON image_af7f2d.png --- */
+  
+  .bismillah-text { 
+    font-size: 1.8rem; /* Mobile ke liye chhota kiya */
+    width: 100%;
+  }
 
-  /* Mobile Background Overlay under sliding drawer */
+  #hero h1.names { 
+    font-size: 2rem; 
+    margin: 5px 0;
+  }
+
+  #hero .amp {
+    font-size: 2.8rem;
+    line-height: 1;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+    padding: 0 10px;
+    width: 100%;
+    word-wrap: break-word; /* Text screen se bahar nahi jayega */
+  }
+
+  .date-pill {
+    font-size: 0.95rem;
+    padding: 8px 20px;
+    max-width: 90%;
+  }
+
+  .venue-text { 
+    font-size: 0.85rem; 
+    padding: 0 15px;
+    width: 100%;
+    word-wrap: break-word; /* Address box ke andar wrap ho jayega */
+  }
+
+  /* Countdown Grid Responsive Fix */
+  #countdown {
+    gap: 8px;
+    width: 100%;
+    justify-content: center; /* Taki screen ke beech me rahe aur cut-off na ho */
+    padding: 0 10px;
+  }
+
+  .cd-box {
+    min-width: 75px; /* Size thoda kam kiya taaki 4 boxes screen par fit aa saken */
+    padding: 8px;
+  }
+
+  .cd-box .num {
+    font-size: 1.4rem;
+  }
+
+  .cd-box .lbl {
+    font-size: 0.55rem;
+  }
+
+  /* Other Sections Elements */
+  .islamic-quote { font-size: 1rem; line-height: 1.6; padding: 0 10px; }
+  .couple-row { gap: 15px; }
+  .person { width: 100%; max-width: 280px; padding: 15px; }
+  .avatar { width: 90px; height: 90px; }
+  .amp-big { font-size: 2.5rem; margin: -5px 0; }
+  .events-grid { grid-template-columns: 1fr; width: 100%; max-width: 300px; }
+
+  /* Mobile Background Overlay */
   .sidebar-overlay {
     position: fixed;
     inset: 0;
