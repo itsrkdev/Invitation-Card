@@ -294,7 +294,8 @@ footer .script { font-family: var(--font-script); font-size: 2.5rem; color: var(
   .env-flap { border-left-width: 145px; border-right-width: 145px; border-top-width: 110px; }
 
   .env-seal {
-    top: 31%;           
+    top: 31%;
+    left: 50%;
     width: 36px;        
     height: 36px;
     font-size: 1.2rem;   
