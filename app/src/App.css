@@ -446,63 +446,82 @@ h2 { font-family: var(--font-royal); font-size: 2rem; color: var(--gold-primary)
     font-size: 1rem;
     color: var(--gold-primary);
     letter-spacing: 1px;
+    margin: 0 auto;
   }
-
-  /* Hamburger Menu Button */
-  .menu-toggle-btn {
-    background: transparent;
-    border: none;
-    padding: 8px;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    box-shadow: none;
-    position: static;
-  }
-  
-  .menu-toggle-btn .bar {
-    display: block;
-    width: 22px;
-    height: 2px;
-    background-color: var(--gold-primary);
-    transition: all 0.3s ease;
-  }
-  .menu-toggle-btn.active .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  .menu-toggle-btn.active .bar:nth-child(2) { opacity: 0; }
-  .menu-toggle-btn.active .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
   /*
-     ---- SIDEBAR MOBILE FIX ----
-     Pehle "left: -280px -> left: 0" use ho raha tha jo kai mobile
-     browsers (Safari/Chrome Android) me reliably repaint/animate
-     nahi hota jab element position:fixed ho. Ab hum GPU-accelerated
-     transform: translateX() use kar rahe hai jo har device par
-     consistently kaam karta hai.
+     ---- SIDEBAR -> BOTTOM NAV BAR ON MOBILE ----
+     Ab hamburger/drawer nahi hai. Sidebar hamesha visible rehta hai,
+     bas mobile par ye neeche ek fixed horizontal bar ban jata hai —
+     bilkul PC wale side panel jaisa look, sirf position bottom.
   */
   .sidebar-menu {
     position: fixed;
-    top: 0;
+    bottom: 0;
     left: 0;
-    width: 280px;
-    height: 100vh;
-    z-index: 1500;
-    padding: 90px 25px 40px;
-    transform: translateX(-100%);
-    transition: transform 0.4s cubic-bezier(0.77, 0.2, 0.05, 1);
-    will-change: transform;
-    box-shadow: 10px 0 35px rgba(0,0,0,0.6);
-    background: linear-gradient(180deg, #0e241c 0%, #050f0b 100%);
-    pointer-events: none;
+    right: 0;
+    top: auto;
+    width: 100vw;
+    height: auto;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 8px 6px;
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
+    z-index: 1300;
+    transform: none;
+    border-right: none;
+    border-top: 1px solid rgba(212, 175, 55, 0.25);
+    box-shadow: 0 -8px 25px rgba(0,0,0,0.5);
+    background: linear-gradient(0deg, #0e241c 0%, #0b1d16 100%);
   }
-  
-  .sidebar-menu.open {
-    transform: translateX(0);
-    pointer-events: auto;
+
+  .sidebar-logo,
+  .sidebar-footer {
+    display: none; /* bottom bar par sirf nav items chahiye */
   }
 
   .sidebar-nav {
     margin-top: 0;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+  }
+
+  .nav-item-btn {
+    flex: 1;
+    flex-direction: column;
+    gap: 3px;
+    text-align: center;
+    justify-content: center;
+    font-size: 0.68rem;
+    padding: 8px 4px;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+  }
+
+  .nav-item-btn:hover {
+    padding-left: 4px; /* desktop wala hover-shift mobile par nahi chahiye */
+    background: rgba(212, 175, 55, 0.08);
+  }
+
+  .nav-item-btn.active {
+    background: rgba(212, 175, 55, 0.14);
+    box-shadow: none;
+    padding-left: 4px;
+  }
+
+  .btn-indicator {
+    width: 18px;
+    height: 3px;
+    border-radius: 3px;
+  }
+
+  .nav-item-btn.active .btn-indicator {
+    transform: none;
   }
 
   /* Content view reset for phone */
@@ -629,32 +648,18 @@ h2 { font-family: var(--font-royal); font-size: 2rem; color: var(--gold-primary)
   .events-grid { grid-template-columns: 1fr; width: 100%; max-width: 260px; gap: 10px; }
   .event-card { padding: 15px 10px; }
 
-  /* Navigation Dots Overlay Bottom */
+  /* Navigation Dots — mobile par bottom bar hi navigation ka kaam karta hai */
   #navdots {
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    bottom: 20px !important;
+    display: none;
   }
 
-  /* Mobile Background Drawer Overlay */
-  .sidebar-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 1400;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
+  /* Sections ko bottom bar ke peeche chhupne se bachane ke liye extra jagah */
+  section {
+    padding-bottom: 90px !important;
   }
-  .sidebar-overlay.visible { opacity: 1; visibility: visible; }
 
   /* Envelope Responsive */
   .env-wrap { width: 270px; height: 200px; }
   .env-flap { border-left-width: 135px; border-right-width: 135px; border-top-width: 100px; }
   .env-seal { top: 50%; left: 50%; transform: translate(-50%, -50%); width: 34px; height: 34px; font-size: 1rem; }
-}
-
-/* Desktop par overlay kabhi na dikhe (safety) */
-@media (min-width: 901px) {
-  .sidebar-overlay { display: none; }
 }
