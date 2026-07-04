@@ -141,6 +141,8 @@ export default function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const cd = useCountdown(WEDDING_DATA.weddingDateISO);
   const isThrottled = useRef(false);
+  const currentSlideRef = useRef(currentSlide);
+  const sectionsLenRef = useRef(0);
 
   const sections = [
     { id: "hero", label: "Home" },
@@ -150,46 +152,66 @@ export default function App() {
     { id: "rsvp", label: "RSVP" },
   ];
 
+  sectionsLenRef.current = sections.length;
+
+  useEffect(() => {
+    currentSlideRef.current = currentSlide;
+  }, [currentSlide]);
+
   const handleSlideChange = (direction) => {
     if (isThrottled.current) return;
     isThrottled.current = true;
-    setTimeout(() => { isThrottled.current = false; }, 800); 
+    setTimeout(() => { isThrottled.current = false; }, 800);
 
     setCurrentSlide((prev) => {
-      if (direction === 'next') return prev < sections.length - 1 ? prev + 1 : prev;
+      if (direction === 'next') return prev < sectionsLenRef.current - 1 ? prev + 1 : prev;
       return prev > 0 ? prev - 1 : prev;
     });
   };
 
   const jumpToSlide = (index) => {
     setCurrentSlide(index);
-    setIsMobileMenuOpen(false); 
+    setIsMobileMenuOpen(false);
   };
 
+  // ---- SCROLL WHEEL + TOUCH SWIPE -> SLIDE CHANGE (works on PC + phone) ----
   useEffect(() => {
     if (!opened) return;
     let touchStartX = 0;
+    let touchStartY = 0;
 
     const handleWheel = (e) => {
       if (Math.abs(e.deltaY) > 20) {
+        e.preventDefault();
         if (e.deltaY > 0) handleSlideChange('next');
         else handleSlideChange('prev');
       }
     };
 
-    const handleTouchStart = (e) => { touchStartX = e.touches[0].clientX; };
+    const handleTouchStart = (e) => {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    };
+
     const handleTouchEnd = (e) => {
       const touchEndX = e.changedTouches[0].clientX;
+      const touchEndY = e.changedTouches[0].clientY;
       const diffX = touchStartX - touchEndX;
-      if (Math.abs(diffX) > 60) {
+      const diffY = touchStartY - touchEndY;
+
+      // Sirf tab slide badle jab horizontal swipe, vertical scroll se zyada ho
+      if (Math.abs(diffX) > 60 && Math.abs(diffX) > Math.abs(diffY)) {
         if (diffX > 0) handleSlideChange('next');
         else handleSlideChange('prev');
       }
     };
 
-    window.addEventListener('wheel', handleWheel);
-    window.addEventListener('touchstart', handleTouchStart);
-    window.addEventListener('touchend', handleTouchEnd);
+    // passive:false zaroori hai taaki preventDefault() kaam kare
+    // (isse phone aur PC dono par scroll se slide reliably badalta hai)
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchend', handleTouchEnd, { passive: true });
+
     return () => {
       window.removeEventListener('wheel', handleWheel);
       window.removeEventListener('touchstart', handleTouchStart);
@@ -208,13 +230,13 @@ export default function App() {
   return (
     <div className="wedding-body">
       <Envelope onOpen={() => setOpened(true)} />
-      
+
       {/* MOBILE ONLY NAVIGATION TRIGGER HEADER */}
       {opened && (
         <div className="mobile-header">
           <div className="mobile-title">{WEDDING_DATA.bride.name} &amp; {WEDDING_DATA.groom.name}</div>
-          <button 
-            className={`menu-toggle-btn ${isMobileMenuOpen ? 'active' : ''}`} 
+          <button
+            className={`menu-toggle-btn ${isMobileMenuOpen ? 'active' : ''}`}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             <span className="bar"></span>
@@ -226,7 +248,7 @@ export default function App() {
 
       {/* DUAL WORKSPACE LAYOUT WRAPPER */}
       <div className="app-workspace">
-        
+
         {/* SIDEBAR NAVIGATION - Desktop par static button panel, Mobile par sliding panel */}
         {opened && (
           <div className={`sidebar-menu ${isMobileMenuOpen ? 'open' : ''}`}>
@@ -250,15 +272,17 @@ export default function App() {
         )}
 
         {/* MOBILE OVERLAY BACKGROUND */}
-        <div 
-          className={`sidebar-overlay ${isMobileMenuOpen ? 'visible' : ''}`} 
-          onClick={() => setIsMobileMenuOpen(false)}
-        ></div>
+        {opened && (
+          <div
+            className={`sidebar-overlay ${isMobileMenuOpen ? 'visible' : ''}`}
+            onClick={() => setIsMobileMenuOpen(false)}
+          ></div>
+        )}
 
         {/* RIGHT CONTENT WORKSPACE - HORIZONTAL SLIDER VIEW */}
         <div className="content-workspace">
-          <div 
-            className="main-container" 
+          <div
+            className="main-container"
             style={{ transform: `translateX(-${currentSlide * 100}%)` }}
           >
             {/* HERO SECTION */}
@@ -266,20 +290,20 @@ export default function App() {
               <div className="hero-content">
                 <div className="bismillah-text">{WEDDING_DATA.bismillah}</div>
                 <div className="eyebrow">The Celebration of Nikah</div>
-                
+
                 <h1 className="names">
                   <div className="bride-name">{WEDDING_DATA.bride.name}</div>
                   <div className="amp">&amp;</div>
                   <div className="groom-name">{WEDDING_DATA.groom.name}</div>
                 </h1>
-                
+
                 <p className="subtitle">{WEDDING_DATA.tagline}</p>
-                
+
                 <div className="date-pill-container">
                   <div className="date-pill">{WEDDING_DATA.weddingDateDisplay}</div>
                   <div className="hijri-pill">{WEDDING_DATA.hijriDate}</div>
                 </div>
-                
+
                 <p className="venue-text">📍 {WEDDING_DATA.venueCity}</p>
 
                 <div id="countdown">
@@ -381,9 +405,9 @@ export default function App() {
       {opened && (
         <div id="navdots">
           {sections.map((s, index) => (
-            <button 
-              key={s.id} 
-              className={currentSlide === index ? "active" : ""} 
+            <button
+              key={s.id}
+              className={currentSlide === index ? "active" : ""}
               onClick={() => setCurrentSlide(index)}
             ></button>
           ))}
