@@ -429,7 +429,7 @@ h2 { font-family: var(--font-royal); font-size: 2rem; color: var(--gold-primary)
 /* ======================================================================
    PERFECT RESPONSIVE & MOBILE DESIGN ARCHITECTURE (SIDEBAR FIX + SLIDE FIX)
    ====================================================================== */
-@media (max-width: 900px) {
+@media (max-width: 980px) {
   :root {
     --sidebar-width: 0px; 
   }
