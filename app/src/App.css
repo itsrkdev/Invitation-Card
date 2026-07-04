@@ -519,11 +519,17 @@ h2 { font-family: var(--font-royal); font-size: 2rem; color: var(--gold-primary)
     position: relative;
   }
 
-  /* CRITICAL MOBILE SLIDER FIX: Horizontal lock scaling */
+  /* CRITICAL MOBILE SLIDER FIX:
+     Pehle yaha "width: 500%" diya hua tha, jisse container ka apna
+     box 500vw ho jata tha. JS translateX(-currentSlide*100%) uss
+     500vw ka % leta hai, isliye 1 slide move karne par 5 section
+     jitna jump ho jata tha aur baaki pages blank/khaali dikhte the.
+     Ab width fix hata di — container apne aap sahi size lega
+     (bilkul desktop jaisa), aur sections bas overflow karke
+     content-workspace ke andar clip ho jayenge. */
   .main-container {
     display: flex !important;
     flex-direction: row !important;
-    width: 500% !important; 
     height: 100vh !important;
     touch-action: pan-y;
   }
