@@ -7,7 +7,7 @@ import groomPic from './assets/H.png';
 // WEDDING_DATA — Real Custom Data (Maintained Perfectly)
 // ======================================================================
 const WEDDING_DATA = {
-  bismillah: "بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ",
+  bismillah: "بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ النِّكَاحُ مِنْ سُنَّتِي",
   tagline: "In the name of Allah, the Most Gracious, the Most Merciful",
   bride: {
     name: "Shahen",
