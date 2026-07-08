@@ -7,8 +7,8 @@ import groomPic from './assets/H.png';
 // WEDDING_DATA — Real Custom Data (Maintained Perfectly)
 // ======================================================================
 const WEDDING_DATA = {
-  bismillah: "الرَّحِيْمِ النِّكَاحُ مِنْ سُنَّتِي
-    النِّكَاحُ مِنْ سُنَّتِي فَمَنْ لَمْ يَعْمَلْ بِسُنَّتِي فَلَيْسَ مِنِّي",
+  bismillah: "الرَّحِيْمِ النِّكَاحُ مِنْ سُنَّتِي",
+  bismillah2: "النِّكَاحُ مِنْ سُنَّتِي فَمَنْ لَمْ يَعْمَلْ بِسُنَّتِي فَلَيْسَ مِنِّي",
   tagline: "In the name of Allah, the Most Gracious, the Most Merciful",
   bride: {
     name: "Shahen",
@@ -304,6 +304,7 @@ export default function App() {
             <section id="hero">
               <div className="hero-content">
                 <div className="bismillah-text">{WEDDING_DATA.bismillah}</div>
+                <div className="bismillah-text">{WEDDING_DATA.bismillah2}</div>
                 <div className="eyebrow">The Celebration of Nikah</div>
 
                 <h1 className="names">
